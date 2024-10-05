@@ -87,6 +87,28 @@ namespace Reddit.Controllers
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
+        [HttpPost("JoinCommunity")]
+        public async Task<IActionResult> JoinCommunity(int userID, int communityID)
+        {
+            var community = await _context.Communities.FindAsync(communityID);
+
+            if (community == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(userID);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.SubscribedCommunities.Add(community);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)

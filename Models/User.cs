@@ -8,5 +8,10 @@
 
         public virtual List<Post> Posts { get; set; } = new();
         public virtual List<Comment> Comments { get; set; } = new();
+
+         public virtual ICollection<Community>? SubscribedCommunities { get; set; } = new List<Community>();
+
+        public virtual ICollection<Community>? OwnedCommunities { get; set; } = new List<Community>();
+
     }
 }
